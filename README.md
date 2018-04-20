@@ -3,7 +3,7 @@
 **ScriptTiger is currently sponsoring a verified charitable cause for a family in need living in Indonesia. Please visit the following link to read more, and please share it, like it, and, if you feel so led, contribute to the cause.
 http://gf.me/u/hv2dbu**
 
-# IP
+# Hosts Compressor
 Drag and drop a hosts file to compress it.
 
 I just wrote this custom for someone and it is still extremely rough.
