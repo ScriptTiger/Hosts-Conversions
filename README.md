@@ -5,6 +5,8 @@ Drag and drop a hosts file to compress it.
 
 I just wrote this custom for someone and it is still extremely rough.
 
+**There are no prompts yet, so please read and adjust the blackhole and compression variables at the top of the script as needed before using!**
+
 You can download this repo from the below link to get started:  
 https://github.com/ScriptTiger/Hosts-Compressor/archive/master.zip
 
