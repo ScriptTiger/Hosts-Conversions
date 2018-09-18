@@ -32,7 +32,7 @@ set TYPE=
 set PTYPE=
 set COUNT=0
 set GLOB=
-(for /f "tokens=1,2,3*" %%a in (
+(for /f "tokens=1,2*" %%a in (
 'findstr /b "!FROM_BLACKHOLE!" "%~s1" ^| findstr /v "0[.]0[.]0[.]0.[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*"'
 ) do @(
 set LINE=%%a
