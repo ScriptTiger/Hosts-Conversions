@@ -8,7 +8,7 @@ rem https://github.com/ScriptTiger/Hosts-Compressor
 rem =====
 
 setlocal ENABLEDELAYEDEXPANSION
-if "%1"=="" echo Please drag and drop a host file to be compressed&pause&exit
+if "%~1"=="" echo Please drag and drop a host file to be compressed&pause&exit
 
 
 
@@ -27,17 +27,17 @@ set COMPRESSION=9
 
 
 
-echo Compressing "%1" to "%~dp0compressed-%~nx1"...
+echo Compressing "%~1" to "%~dp0compressed-%~nx1"...
 set TYPE=
 set PTYPE=
 set COUNT=0
 set GLOB=
-(for /f "tokens=*" %%a in (
+(for /f "tokens=1,2,3*" %%a in (
 'findstr /b "!FROM_BLACKHOLE!" "%~s1" ^| findstr /v "0[.]0[.]0[.]0.[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*"'
 ) do @(
 set LINE=%%a
 if "!LINE:~,1!"=="#" set TYPE=COMMENT
-if "!LINE:~,8!"=="!FROM_BLACKHOLE! " set TYPE=DOMAIN
+if "%%a"=="!FROM_BLACKHOLE!" set TYPE=DOMAIN
 if not "!TYPE!"=="!PTYPE!" (
 if "!GLOB:~,2!"==" #" (
 echo !GLOB:~1!
@@ -52,7 +52,7 @@ set GLOB=!GLOB! !LINE!
 set COUNT=0
 )
 if "!TYPE!" == "DOMAIN" (
-set GLOB=!GLOB! !LINE:~8!
+set GLOB=!GLOB! %%b
 set /a COUNT=!COUNT!+1
 if !COUNT!==!COMPRESSION! (
 echo !TO_BLACKHOLE!!GLOB!
