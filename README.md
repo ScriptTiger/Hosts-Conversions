@@ -3,7 +3,7 @@
 # Hosts Conversions
 Drag and drop a hosts file to convert it.
 
-Compressed:
+Compressed:  
 Compresses a hosts file to 9 domains a line.
 
 You can download this repo from the below link to get started:  
