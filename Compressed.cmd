@@ -4,14 +4,11 @@ rem =====
 rem For more information on ScriptTiger and more ScriptTiger scripts visit the following URL:
 rem https://scripttiger.github.io/
 rem Or visit the following URL for the latest information on this ScriptTiger script:
-rem https://github.com/ScriptTiger/Hosts-Compressor
+rem https://github.com/ScriptTiger/Hosts-Conversions
 rem =====
 
 setlocal ENABLEDELAYEDEXPANSION
 if "%~1"=="" echo Please drag and drop a host file to be compressed&pause&exit
-
-
-
 
 rem Blackhole address for source file
 set FROM_BLACKHOLE=0.0.0.0
@@ -21,11 +18,6 @@ set TO_BLACKHOLE=0.0.0.0
 
 rem Compression from 1 to 9 domains per line
 set COMPRESSION=9
-
-
-
-
-
 
 echo Compressing "%~1" to "%~dp0compressed-%~nx1"...
 set TYPE=
