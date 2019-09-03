@@ -46,7 +46,7 @@ rem Forcing a write operating each line is considerably slower when dealing with
 (
 	rem Read from the source hosts file and enfore clean input
 	for /f "tokens=1,2*" %%a in (
-		'findstr /v "0[.]0[.]0[.]0.[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*" "%~s1"'
+		'findstr /b "!FROM_BLACKHOLE:.=[.]! #" "%~s1" ^| findstr /v "!FROM_BLACKHOLE:.=[.]!.[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*"'
 	) do (
 		set LINE=%%a
 		set SKIP=0

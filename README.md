@@ -6,6 +6,9 @@ Drag and drop a hosts file to convert it.
 Compressed:  
 Compresses a hosts file to 9 domains a line.
 
+RPZ:  
+Converts a hosts file to DNS RPZ format to be inserted into a zone file.
+
 You can download this repo from the below link to get started:  
 https://github.com/ScriptTiger/Hosts-Conversions/archive/master.zip
 
