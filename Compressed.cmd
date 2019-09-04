@@ -92,8 +92,10 @@ rem Forcing a write operating each line is considerably slower when dealing with
 		)
 	)
 	rem Dump the final globs
-	if !COMMENTS!==1 if "!PTYPE!"=="COMMENT" echo !GLOB:~1!
-	if "!PTYPE!"=="DOMAIN" echo !TO_BLACKHOLE!!GLOB!
+	if !COMMENTS!==1 (
+		if "!PTYPE!"=="COMMENT" echo !GLOB:~1!
+		if "!PTYPE!"=="DOMAIN" echo !TO_BLACKHOLE!!GLOB!
+	) else if not "!GLOB!"=="" echo !TO_BLACKHOLE!!GLOB!
 ) > "%~dp0compressed-%~nx1"
 echo "%1" compressed to "%~dp0compressed-%~nx1"
 pause
