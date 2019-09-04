@@ -49,7 +49,7 @@ echo Converting "%~1" to "%~dp0RPZ-%~nx1"...
 (
 	rem Enforce clean input from only comment lines and domain name lines, everything else is removed
 	for /f "tokens=1,2*" %%a in (
-		'findstr /b "!FROM_BLACKHOLE:.=[.]! #" "%~s1" ^| findstr /v "!FROM_BLACKHOLE:.=[.]!.[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*"'
+		'findstr /b "!FROM_BLACKHOLE:.=[.]! #" "%~s1" ^| findstr /b /v "!FROM_BLACKHOLE:.=[.]!.[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*"'
 	) do (
 		set LINE=%%a %%b %%c
 		rem If the line is not a comment line, generate search strings for each parent domain to cross-check index
