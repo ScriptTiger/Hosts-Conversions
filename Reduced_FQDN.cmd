@@ -87,7 +87,7 @@ echo Converting "%~1" to "%~dp0Reduced-FQDN-%~nx1"...
 					)
 				)
 			)
-		) else if !COMMENTS!==1 echo ;!LINE:~1!
+		) else if !COMMENTS!==1 echo !LINE!
 	)
 ) > "%~dp0Reduced-FQDN-%~nx1"
 
