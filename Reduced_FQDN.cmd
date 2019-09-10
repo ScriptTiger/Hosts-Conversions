@@ -45,7 +45,7 @@ echo Generating domain index from "%~1"...
 
 rem Cross-check all possible parent domains from each entry in the hosts file with exact matches from the index
 rem If the entry is a subdomain of a parent domain already indexed, don't include the subdomain
-echo Converting "%~1" to "%~dp0Unbound-%~nx1"...
+echo Converting "%~1" to "%~dp0Reduced-FQDN-%~nx1"...
 (
 	rem Enforce clean input from only comment lines and domain name lines, everything else is removed
 	for /f "tokens=1,2*" %%a in (
@@ -57,7 +57,9 @@ echo Converting "%~1" to "%~dp0Unbound-%~nx1"...
 		if not "!LINE:~,1!"=="#" (
 			for /f "tokens=2,3,4,5,6,7,8,9* delims=." %%j in ("%%b") do (
 				rem If the domain name is only a second-level domain, automatically write it and skip searching anything
-				if not "%%k"=="" (
+				if "%%k"=="" (
+					echo %%b
+				) else (
 					rem Rapidly generate search strings for all possible parent domains using as much known static data as possible to speed up the process
 					set FINDSTR=
 					if not "%%k"=="" set FINDSTR=%%j.%%k
@@ -80,12 +82,14 @@ echo Converting "%~1" to "%~dp0Unbound-%~nx1"...
 					rem Phishing domains often stack domain names like XXX.com.YYY.com, and this could create problems for partial matches
 					findstr /l /x /m "!FINDSTR!" "!CTEMP!" > nul
 					rem If no parent domains are found in the index, write the domain to file
-					if !errorlevel!==1 echo local-zone: "%%b" always_nxdomain
-				) else echo local-zone: "%%b" always_nxdomain
+					if !errorlevel!==1 (
+						echo %%b
+					)
+				)
 			)
-		) else if !COMMENTS!==1 echo !LINE!
+		) else if !COMMENTS!==1 echo ;!LINE:~1!
 	)
-) > "%~dp0Unbound-%~nx1"
+) > "%~dp0Reduced-FQDN-%~nx1"
 
 rem Remove cache files
 if exist "!CACHE!" (
@@ -93,7 +97,7 @@ if exist "!CACHE!" (
 	rmdir /s /q "!CACHE!"
 )
 
-echo "%1" converted to "%~dp0Unbound-%~nx1"
+echo "%1" converted to "%~dp0Reduced-FQDN-%~nx1"
 
 pause
 

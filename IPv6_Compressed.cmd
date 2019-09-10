@@ -9,7 +9,7 @@ rem =====
 
 rem Error if no input file given
 if "%~1"=="" (
-	echo Please drag and drop a host file to be compressed
+	echo Please drag and drop a host file to be converted
 	pause
 	exit
 )
@@ -25,6 +25,9 @@ set FROM_BLACKHOLE=0.0.0.0
 rem Blackhole address for resultant file
 set TO_BLACKHOLE=0.0.0.0
 
+rem IPv6 blackhole address for resultant file
+set TO_BLACKHOLE_v6=::
+
 rem Compression from 1 to 9 domains per line
 set COMPRESSION=9
 
@@ -33,7 +36,7 @@ set COMMENTS=0
 
 rem =====
 
-echo Compressing "%~1" to "%~dp0Compressed-%~nx1"...
+echo Converting "%~1" to "%~dp0IPv6-Compressed-%~nx1"...
 
 rem (De-)initialize iterating variables
 set TYPE=
@@ -63,7 +66,12 @@ rem Forcing a write operating each line is considerably slower when dealing with
 				if not "!TYPE!"=="!PTYPE!" (
 					if "!GLOB:~,2!"==" #" (
 						echo !GLOB:~1!
-					) else if not "!GLOB!"=="" echo !TO_BLACKHOLE!!GLOB!
+					) else (
+						if not "!GLOB!"=="" (
+							echo !TO_BLACKHOLE!!GLOB!
+							echo !TO_BLACKHOLE_v6!!GLOB!
+						)
+					)
 					set COUNT=0
 					set GLOB=
 				)
@@ -79,6 +87,7 @@ rem Forcing a write operating each line is considerably slower when dealing with
 				set /a COUNT=!COUNT!+1
 				if !COUNT!==!COMPRESSION! (
 					echo !TO_BLACKHOLE!!GLOB!
+					echo !TO_BLACKHOLE_v6!!GLOB!
 					set GLOB=
 					set COUNT=0
 				)
@@ -94,8 +103,16 @@ rem Forcing a write operating each line is considerably slower when dealing with
 	rem Dump the final globs
 	if !COMMENTS!==1 (
 		if "!PTYPE!"=="COMMENT" echo !GLOB:~1!
-		if "!PTYPE!"=="DOMAIN" echo !TO_BLACKHOLE!!GLOB!
-	) else if not "!GLOB!"=="" echo !TO_BLACKHOLE!!GLOB!
-) > "%~dp0Compressed-%~nx1"
-echo "%1" compressed to "%~dp0Compressed-%~nx1"
+		if "!PTYPE!"=="DOMAIN" (
+			echo !TO_BLACKHOLE!!GLOB!
+			echo !TO_BLACKHOLE_v6!!GLOB!
+		)
+	) else (
+		if not "!GLOB!"=="" (
+			echo !TO_BLACKHOLE!!GLOB!
+			echo !TO_BLACKHOLE_v6!!GLOB!
+		)
+	)
+) > "%~dp0IPv6-Compressed-%~nx1"
+echo "%1" converted to "%~dp0IPv6-Compressed-%~nx1"
 pause

@@ -9,7 +9,7 @@ rem =====
 
 rem Error if no input file given
 if "%~1"=="" (
-	echo Please drag and drop a host file to be compressed
+	echo Please drag and drop a host file to be converted
 	pause
 	exit
 )
