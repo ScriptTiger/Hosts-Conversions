@@ -80,8 +80,14 @@ echo Converting "%~1" to "%~dp0Unbound-%~nx1"...
 					rem Phishing domains often stack domain names like XXX.com.YYY.com, and this could create problems for partial matches
 					findstr /l /x /m "!FINDSTR!" "!CTEMP!" > nul
 					rem If no parent domains are found in the index, write the domain to file
-					if !errorlevel!==1 echo local-zone: "%%b" always_nxdomain
-				) else echo local-zone: "%%b" always_nxdomain
+					if !errorlevel!==1 (
+						echo local-zone: "%%b" redirect
+						echo local-data: "%%b A 0.0.0.0"
+					)
+				) else (
+					echo local-zone: "%%b" redirect
+					echo local-data: "%%b A 0.0.0.0"
+				)
 			)
 		) else if !COMMENTS!==1 echo !LINE!
 	)
